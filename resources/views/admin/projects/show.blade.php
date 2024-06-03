@@ -28,4 +28,12 @@
 
         <p>{{ $project->summary ? $project->summary : 'No summary' }}</p>
     </div>
+    <div class="d-flex gap-2">
+        <a href="{{ route('admin.projects.edit', ['project' => $project->id]) }}" class="btn btn-success btn-sm">Edit</a>
+        <form action="{{ route('admin.projects.destroy', ['project' => $project->id])}}" method="post">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+        </form>
+    </div>
 @endsection

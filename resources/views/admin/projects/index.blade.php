@@ -15,14 +15,20 @@
         </thead>
         <tbody>
             @foreach ($projects as $project)
-            <tr>
+            <tr class="">
                 <td>{{$project->id}}</td>
                 <td>{{$project->name}}</td>
                 <td>{{$project->client_name}}</td>
                 <td>{{$project->created_at}}</td>
                 <td>
-                    <div>
-                        <a href="{{ route('admin.projects.show', ['project' => $project->id]) }}">View</a>
+                    <div class="d-flex gap-2">
+                        <a href="{{ route('admin.projects.show', ['project' => $project->slug]) }}" class="btn btn-success btn-sm">View</a>
+                        <a href="{{ route('admin.projects.edit', ['project' => $project->id]) }}" class="btn btn-success btn-sm">Edit</a>
+                        <form action="{{ route('admin.projects.destroy', ['project' => $project->id])}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
                     </div>
                 </td>
             </tr>
