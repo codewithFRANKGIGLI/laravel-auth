@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+    @include('partials.flash-messages')
     <h2>{{ $project->name }}</h2>
 
     <div>
@@ -22,15 +23,19 @@
     <div>
         <strong>Update at</strong>: {{ $project->updated_at }}
     </div>
-
+    @if ($project->cover_img)
+        <div>
+            <img src="{{ asset('storage/' . $project->cover_img) }}" alt="{{ $project->name }}">
+        </div>
+    @endif
     <div class="mt-4">
         <strong>Summary</strong>
 
         <p>{{ $project->summary ? $project->summary : 'No summary' }}</p>
     </div>
     <div class="d-flex gap-2">
-        <a href="{{ route('admin.projects.edit', ['project' => $project->id]) }}" class="btn btn-success btn-sm">Edit</a>
-        <form action="{{ route('admin.projects.destroy', ['project' => $project->id])}}" method="post">
+        <a href="{{ route('admin.projects.edit', ['project' => $project->slug]) }}" class="btn btn-success btn-sm">Edit</a>
+        <form action="{{ route('admin.projects.destroy', ['project' => $project->slug]) }}" method="post">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
